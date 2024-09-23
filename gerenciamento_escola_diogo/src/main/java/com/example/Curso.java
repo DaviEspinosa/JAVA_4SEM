@@ -22,6 +22,21 @@ public class Curso {
     }
 
     public void lancarNota(String nomeAluno, double nota){
-        
+        for (Aluno aluno : listAluno) {
+            if (aluno.getNome().equalsIgnoreCase(nomeAluno)) {
+                aluno.setNome(nomeAluno);
+                System.out.println("Nota Inserida com Sucesso");
+                return;
+            }else{
+                System.out.println("Aluno não encontrada");
+            }
+        }
+    }
+
+    public void resultadoFinal(){
+        for (Aluno aluno : listAluno) {
+            System.out.println(aluno.exibirInfo());
+            aluno.avaliarDesempenho();
+        }
     }
 }
