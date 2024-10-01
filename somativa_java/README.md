@@ -95,3 +95,60 @@ classDiagram
 ```
 **Diagrama de Fluxo:**
 
+```mermaid
+flowchart TD
+    A["Início"] --> B{"Usuário está logado?"}
+    B -- Não --> C["Usuário cria cadastro"]
+    C --> D["Coletar informações do usuário"]
+    D --> E["Cadastrar usuário"]
+    E --> F["Usuário cadastrado com sucesso"]
+    F --> G["Usuário deseja abrir uma conta?"]
+    G -- Sim --> H["Coletar informações da conta"]
+    H --> I["Abrir conta bancária"]
+    I --> J["Conta bancária criada com sucesso"]
+    J --> K["Fim"]
+    B -- Sim --> L["Usuário acessa o sistema"]
+    L --> M{"Escolha uma ação"}
+    M -- Depositar --> N["Coletar detalhes do depósito"]
+    N --> O["Executar depósito"]
+    O --> P["Depósito realizado com sucesso"]
+    P --> M
+    M -- Sacar --> Q["Coletar detalhes do saque"]
+    Q --> R["Executar saque"]
+    R --> S["Saque realizado com sucesso"]
+    S --> M
+    M -- Transferir --> T["Coletar detalhes da transferência"]
+    T --> U["Executar transferência"]
+    U --> V["Transferência realizada com sucesso"]
+    V --> M
+    M -- Visualizar saldo --> W["Mostrar saldo"]
+    W --> M
+    M -- Sair --> X["Fim"]
+    G -- Não --> K
+
+    style A stroke:#FF6D00
+    style B stroke:#FF6D00
+    style C stroke:#FF6D00
+    style D stroke:#FF6D00
+    style E stroke:#FF6D00
+    style F stroke:#FF6D00
+    style G stroke:#FF6D00
+    style H stroke:#FF6D00
+    style I stroke:#FF6D00
+    style J stroke:#FF6D00
+    style K stroke:#FF6D00
+    style L stroke:#FF6D00
+    style M stroke:#FF6D00
+    style N stroke:#FF6D00
+    style O stroke:#FF6D00
+    style P stroke:#FF6D00
+    style Q stroke:#FF6D00
+    style R stroke:#FF6D00
+    style S stroke:#FF6D00
+    style T stroke:#FF6D00
+    style U stroke:#FF6D00
+    style V stroke:#FF6D00
+    style W stroke:#FF6D00
+    style X stroke:#FF6D00
+
+```
