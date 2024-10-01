@@ -152,3 +152,5 @@ flowchart TD
     style X stroke:#FF6D00
 
 ```
+
+**Diagrama de Uso:**
