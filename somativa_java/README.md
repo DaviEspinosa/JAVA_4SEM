@@ -56,14 +56,6 @@ O Sistema de Gerenciamento Bancário Itaú será uma aplicação para simular as
 
 **Diagrama de Classe:**
 ```mermaid
-%%{ init : { 'theme': 'dark', 'themeVariables': { 
-    'classBackground': '#4A148C', 
-    'classTextFill': '#333', 
-    'classBorder': '#000', 
-    'classTextColor': '#000',
-    'edgeLineColor': '#333',
-    'edgeTextColor': '#000' } 
-}}%%
 classDiagram
     class Usuario {
         +int id
