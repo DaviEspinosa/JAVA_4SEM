@@ -92,13 +92,5 @@ classDiagram
     }
     Usuario "1" o-- "0..*" ContaBancaria : possui
     ContaBancaria "1" o-- "0..*" Transacao : registra
-
-
-**Diagrama de Classe:**
-
-<img src="diagramas/diagramaUso.png" alt="Diagrama" width="500"/>
-
+```
 **Diagrama de Fluxo:**
-
-<img src="diagramas/diagramaFluxo1.png" alt="Diagrama" width="500"/>
-<img src="diagramas/diagramaFluxo2.png" alt="Diagrama" width="500"/>
