@@ -76,9 +76,9 @@ classDiagram
         +Decimal saldo
         +String tipoConta
         +Usuario usuario
-        +void depositar()
-        +void sacar()
-        +void transferir()
+        +void depositar(Decimal valor)
+        +void sacar(Decimal valor)
+        +void transferir(ContaBancaria contaDestino, Decimal valor)
         +List<Transacao> transacoes
         +List<Transacao> listarTransacoes()
     }
