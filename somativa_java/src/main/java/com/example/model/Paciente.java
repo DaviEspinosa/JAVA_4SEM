@@ -1,8 +1,9 @@
 package com.example.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import java.time.LocalDate;
+
+import org.bson.types.ObjectId;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,17 +14,15 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class Usuario {
+public class Paciente {
     // id
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private ObjectId id;
     // atributos
     private String cpf;
     private String nome;
     private String email;
-    private String senha;
-    private String dataNascimento;
+    private String historicoMedico;
+    private LocalDate dataNascimento;
     private String telefone;
     private String endereco;
     
