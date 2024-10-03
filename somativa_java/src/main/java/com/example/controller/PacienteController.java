@@ -60,7 +60,30 @@ public class PacienteController {
     }
 
     // excluir paciente
-    public void deletarPaciente(Paciente paciente){
-        listaPaciente = paciente.getNome();
+    public void deletarPaciente(Paciente paciente) {
+        // Verifica se o paciente é null
+        if (paciente == null || paciente.getNome() == null) {
+            JOptionPane.showMessageDialog(null, "Selecione um Paciente para excluir");
+            return;
+        }
+    
+        String nome = paciente.getNome();
+        boolean encontrado = false;
+    
+        // Removendo paciente da lista
+        for (int i = 0; i < listaPaciente.size(); i++) {
+            Paciente p = listaPaciente.get(i);
+            if (p.getNome().equals(nome)) {
+                listaPaciente.remove(i);
+                JOptionPane.showMessageDialog(null, "Paciente '" + nome + "' excluído com sucesso");
+                encontrado = true;
+                break; // Sai do loop após encontrar e remover o paciente
+            }
+        }
+    
+        // Mensagem se o paciente não foi encontrado
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(null, "Paciente '" + nome + "' não encontrado");
+        }
     }
 }
