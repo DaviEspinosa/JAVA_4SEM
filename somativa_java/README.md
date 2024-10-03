@@ -1,46 +1,44 @@
-# Sistema "Itaú"
+# Sistema "Clínica Saúde"
 
 ### **Projeto:**
 
-Sistema de Gerenciamento Bancário
+Sistema de Gerenciamento de Clínica Médica
 
 <hr>
 
 ### **Descrição do Projeto:**
 
-O Sistema de Gerenciamento Bancário Itaú será uma aplicação para simular as funcionalidades de um sistema bancário. O projeto abrangerá desde o cadastro de usuários até operações bancárias como consultas de saldo, transferências e histórico de transações.
+O Sistema de Gerenciamento de Clínica Médica "Clínica Saúde" será uma aplicação destinada a gerenciar as operações de uma clínica médica. O projeto incluirá funcionalidades como cadastro de pacientes, agendamento de consultas, gerenciamento de médicos e registros de atendimentos.
     <hr>
     <br>
 - **Escopo:**
     
-     **Sistema será capaz de:**
-        
-    - **Cadastrar:**
-        Usuários irão visualizar um formulário para cadastrar suas informações, como: cpf, nome, senha, endereço, telefone, e-mail, data de nascimento.
-        <hr>
-    - **Logar:**
-        Poderão também fazer a autenticação para entrar no sistema. Deverá ser digitado as informações de cpf e senha para a entrada.
-        <hr>
-    - **Gerenciamento da Conta:**
-        
-        Tipos de contas: Conta Corrente, Conta Poupança.
-        Saldo inicial configurável.
-        Consulta de Saldo: Permitir que os     usuários verifiquem o saldo de suas contas.
-        <hr>
-    - **Operações Bancárias:**
-        
-        Depósito: Permitir que o usuário faça depósitos em sua conta.
+    **Sistema será capaz de:**
 
-        Saque: Permitir que o usuário realize saques (com validação de saldo suficiente).
-        
-        Transferências entre Contas: Implementar transferências entre contas do mesmo banco.
-    
-    <br>
-    
+    - **Cadastrar:**
+    Pacientes poderão visualizar um formulário para registrar suas informações, como: CPF, nome, endereço,      telefone, e-mail, data de nascimento e histórico médico.
     <hr>
 
+    - **Logar:**
+    Pacientes e profissionais de saúde poderão autenticar-se para acessar suas áreas específicas do sistema     usando CPF e senha.
+    <hr>
 
-    <br>
+    - **Gerenciamento de Pacientes:**
+    Os profissionais de saúde poderão visualizar e atualizar informações dos pacientes, como histórico de       consultas e tratamentos.
+    <hr>
+
+    - **Agendamento de Consultas:**
+    Permitir que os pacientes agendem consultas, visualizem horários disponíveis e recebam confirmações de      agendamentos.
+    <hr>
+
+    - **Atendimentos:**
+    Registro de atendimentos médicos, incluindo anotações sobre diagnósticos, prescrições e orientações         dadas aos pacientes.
+ <br>
+
+<hr>
+
+<br>
+
 - **Recursos/Requisitos:**
     - **Ferramentas de Desenvolvimento:**
         - IDE: Visual Studio Code com extensões para Java Swing tendo suporte para o maven.
@@ -48,7 +46,7 @@ O Sistema de Gerenciamento Bancário Itaú será uma aplicação para simular as
     - **Tecnologias:**
         - Frontend: Java Swing para o desenvolvimento da interface gráfica.
         - Backend: Java com integração ao banco de dados e lógica de negócio.
-        - Banco de Dados: PostgreSQL para armazenamento de dados relacionais.
+        - Banco de Dados: MongoDB para armazenamento de dados não relacionais.
 
 <hr>
 
@@ -57,41 +55,41 @@ O Sistema de Gerenciamento Bancário Itaú será uma aplicação para simular as
 **Diagrama de Classe:**
 ```mermaid
 classDiagram
-    class Usuario {
+    class Paciente {
         +int id
         +String cpf
         +String nome
         +String email
-        +String senhaHash
         +String endereco
         +Date dataNascimento
-        +List<ContaBancaria> contas
+        +String historicoMedico
+        +List<Consulta> consultas
         +void cadastrar()
         +void atualizarDados()
-        +void excluirConta()
+        +void excluirPaciente()
     }
-    class ContaBancaria {
+    class Medico {
         +int id
-        +String numeroConta
-        +Decimal saldo
-        +String tipoConta
-        +Usuario usuario
-        +void depositar(Decimal valor)
-        +void sacar(Decimal valor)
-        +void transferir(ContaBancaria contaDestino, Decimal valor)
-        +List<Transacao> transacoes
-        +List<Transacao> listarTransacoes()
+        +String nome
+        +String especialidade
+        +String crm
+        +List<Consulta> consultas
+        +void cadastrar()
+        +void atualizarDados()
+        +void excluirMedico()
     }
-    class Transacao {
+    class Consulta {
         +int id
-        +String tipoTransacao
-        +Decimal valor
-        +Date dataTransacao
-        +ContaBancaria contaOrigem
-        +ContaBancaria contaDestino
+        +Date dataHora
+        +Paciente paciente
+        +Medico medico
+        +String observacoes
+        +void agendar()
+        +void cancelar()
     }
-    Usuario "1" o-- "0..*" ContaBancaria : possui
-    ContaBancaria "1" o-- "0..*" Transacao : registra
+    Paciente "1" o-- "0..*" Consulta : possui
+    Medico "1" o-- "0..*" Consulta : realiza
+
 ```
 **Diagrama de Fluxo:**
 
@@ -99,31 +97,27 @@ classDiagram
 flowchart TD
     A["Início"] --> B{"Usuário está logado?"}
     B -- Não --> C["Usuário cria cadastro"]
-    C --> D["Coletar informações do usuário"]
-    D --> E["Cadastrar usuário"]
-    E --> F["Usuário cadastrado com sucesso"]
-    F --> G["Usuário deseja abrir uma conta?"]
-    G -- Sim --> H["Coletar informações da conta"]
-    H --> I["Abrir conta bancária"]
-    I --> J["Conta bancária criada com sucesso"]
+    C --> D["Coletar informações do paciente"]
+    D --> E["Cadastrar paciente"]
+    E --> F["Paciente cadastrado com sucesso"]
+    F --> G["Paciente deseja agendar uma consulta?"]
+    G -- Sim --> H["Coletar informações da consulta"]
+    H --> I["Agendar consulta"]
+    I --> J["Consulta agendada com sucesso"]
     J --> K["Fim"]
     B -- Sim --> L["Usuário acessa o sistema"]
     L --> M{"Escolha uma ação"}
-    M -- Depositar --> N["Coletar detalhes do depósito"]
-    N --> O["Executar depósito"]
-    O --> P["Depósito realizado com sucesso"]
+    M -- Agendar --> N["Coletar detalhes da consulta"]
+    N --> O["Executar agendamento"]
+    O --> P["Agendamento realizado com sucesso"]
     P --> M
-    M -- Sacar --> Q["Coletar detalhes do saque"]
-    Q --> R["Executar saque"]
-    R --> S["Saque realizado com sucesso"]
+    M -- Cancelar --> Q["Coletar detalhes do cancelamento"]
+    Q --> R["Executar cancelamento"]
+    R --> S["Cancelamento realizado com sucesso"]
     S --> M
-    M -- Transferir --> T["Coletar detalhes da transferência"]
-    T --> U["Executar transferência"]
-    U --> V["Transferência realizada com sucesso"]
-    V --> M
-    M -- Visualizar saldo --> W["Mostrar saldo"]
-    W --> M
-    M -- Sair --> X["Fim"]
+    M -- Visualizar histórico --> T["Mostrar histórico de consultas"]
+    T --> M
+    M -- Sair --> U["Fim"]
     G -- Não --> K
 
     style A stroke:#FF6D00
@@ -147,9 +141,7 @@ flowchart TD
     style S stroke:#FF6D00
     style T stroke:#FF6D00
     style U stroke:#FF6D00
-    style V stroke:#FF6D00
-    style W stroke:#FF6D00
-    style X stroke:#FF6D00
+
 
 ```
 
