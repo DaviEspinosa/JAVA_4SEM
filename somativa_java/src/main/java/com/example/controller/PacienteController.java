@@ -41,10 +41,10 @@ public class PacienteController {
             dados[i][0] = paciente.getId();
             dados[i][1] = paciente.getNome();
             dados[i][2] = paciente.getCpf();
-            dados[i][3] = paciente.getEmail();
-            dados[i][4] = paciente.getDataNascimento();
-            dados[i][5] = paciente.getTelefone();
-            dados[i][6] = paciente.getEndereco();
+            // dados[i][3] = paciente.getEmail();
+            dados[i][3] = paciente.getDataNascimento();
+            dados[i][4] = paciente.getTelefone();
+            dados[i][5  ] = paciente.getEndereco();
         }
 
         // Criar o JTable com os dados e as colunas
