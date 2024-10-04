@@ -12,33 +12,33 @@ import java.util.List;
 
 public class ClinicaFrame extends JFrame {
     private PacienteController pacienteController;
-    private Paciente paciente;
     private JPanel pacienteListPanel;
 
     public ClinicaFrame(PacienteController controller) {
 
         this.pacienteController = controller;
         setTitle("Gerenciamento de Pacientes");
-        setSize(400, 400);
+        setSize(800, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
-
+ 
         // Painel superior para os botões
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
 
         // Botão para adicionar paciente
         JButton addButton = new JButton("Adicionar");
+        JButton deleteButton = new JButton("Deletar");
+        JButton editButton = new JButton("Editar");
+
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Paciente paciente = new Paciente();
                 pacienteController.addPaciente(paciente);
             }
         });
         buttonPanel.add(addButton);
 
-        // Botão para deletar paciente
-        JButton deleteButton = new JButton("Deletar");
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -48,7 +48,6 @@ public class ClinicaFrame extends JFrame {
         buttonPanel.add(deleteButton);
 
         // Botão para editar paciente
-        JButton editButton = new JButton("Editar");
         // editButton.addActionListener(new ActionListener() {
         //     @Override
         //     public void actionPerformed(ActionEvent e) {
@@ -66,7 +65,7 @@ public class ClinicaFrame extends JFrame {
         add(scrollPane, BorderLayout.CENTER);
 
         // Carregar a lista de pacientes
-        // pacienteListPanel.add(pacienteController.listarPaciente(buttonPanel));
+        pacienteListPanel.add(pacienteController.listarPaciente(buttonPanel));
     }
 
 }
