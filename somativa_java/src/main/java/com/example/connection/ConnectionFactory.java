@@ -13,7 +13,8 @@ public class ConnectionFactory {
     // cria conexão com o banco
     public static Connection createConnection() {
         try {
-            return DriverManager.getConnection(URL, USER, PASSWORD);
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            return connection;
         } catch (Exception e) {
             throw new Error("Falha ao conectar no banco de dados:" + e.getMessage());
         }

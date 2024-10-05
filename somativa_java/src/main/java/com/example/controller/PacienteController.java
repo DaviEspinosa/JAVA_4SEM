@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,28 +10,33 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import com.example.connection.PacienteDAO;
 import com.example.model.Paciente;
 
 public class PacienteController {
 
     private List<Paciente> listaPaciente;
+    private PacienteDAO pacienteDAO;
 
-    public PacienteController() {
+    
+
+    public PacienteController(Connection connection) {
         listaPaciente = new ArrayList<Paciente>();
+        this.pacienteDAO = new PacienteDAO(connection);
     }
-
     // metodos
 
     // adicionar
     public void addPaciente(Paciente paciente) {
         listaPaciente.add(paciente);
+        pacienteDAO.addPaciente(paciente);
     }
 
     // listar
     public void listarPaciente(JPanel panelList) {
 
         // Definindo os nomes das colunas
-        String[] colunas = { "ID", "Nome", "CPF", "Email", "Data de Nascimento", "Telefone", "Endereço" };
+        String[] colunas = { "ID", "Nome", "CPF", "Data de Nascimento", "Telefone", "Endereço" };
 
         // Criando Matriz para os dados
         Object[][] dados = new Object[listaPaciente.size()][colunas.length];
