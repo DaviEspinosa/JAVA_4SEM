@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 import com.example.controller.PacienteController;
 import com.example.model.Paciente;
@@ -11,15 +12,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.List;
 
 public class ClinicaFrame extends JFrame {
     private PacienteController pacienteController;
-    private JPanel pacienteListPanel;
+    private JTable pacientesTable;
+    private DefaultTableModel tableModel;
+    private JScrollPane scrollPane;
+    private List<Paciente> pacientesList;
 
     // Campos de entrada
     private JTextField cpfField;
     private JTextField nomeField;
-    // private JTextField historicoMedicoField;
     private JFormattedTextField dataNascimentoField;
     private JTextField telefoneField;
     private JTextField enderecoField;
@@ -39,7 +43,6 @@ public class ClinicaFrame extends JFrame {
 
         cpfField = new JTextField();
         nomeField = new JTextField();
-        // historicoMedicoField = new JTextField();
 
         try {
             MaskFormatter maskFormatter = new MaskFormatter("##/##/####");
@@ -53,35 +56,32 @@ public class ClinicaFrame extends JFrame {
         enderecoField = new JTextField();
 
         // Criando Labels
-        JLabel cpfLabel = new JLabel("CPF:");
-        JLabel nomeLabel = new JLabel("Nome:");
-        // JLabel historicoMedicoLabel = new JLabel("Histórico Médico:");
-        JLabel dataNascimentoLabel = new JLabel("Data de Nascimento:");
-        JLabel telefoneLabel = new JLabel("Telefone:");
-        JLabel enderecoLabel = new JLabel("Endereço:");
+           // Criando Labels
+           JLabel cpfLabel = new JLabel("CPF:");
+           JLabel nomeLabel = new JLabel("Nome:");
+           JLabel dataNascimentoLabel = new JLabel("Data de Nascimento:");
+           JLabel telefoneLabel = new JLabel("Telefone:");
+           JLabel enderecoLabel = new JLabel("Endereço:");
+   
+           // Atribuindo cor de texto para as labels
+           cpfLabel.setForeground(Color.WHITE);
+           nomeLabel.setForeground(Color.WHITE);
+           dataNascimentoLabel.setForeground(Color.WHITE);
+           telefoneLabel.setForeground(Color.WHITE);
+           enderecoLabel.setForeground(Color.WHITE);
+   
+           inputPanel.add(cpfLabel);
+           inputPanel.add(cpfField);
+           inputPanel.add(nomeLabel);
+           inputPanel.add(nomeField);
+           inputPanel.add(dataNascimentoLabel);
+           inputPanel.add(dataNascimentoField);
+           inputPanel.add(telefoneLabel);
+           inputPanel.add(telefoneField);
+           inputPanel.add(enderecoLabel);
+           inputPanel.add(enderecoField);
 
-        // Atribuindo cor de texto para as labels
-        cpfLabel.setForeground(Color.WHITE);
-        nomeLabel.setForeground(Color.WHITE);
-        // historicoMedicoLabel.setForeground(Color.WHITE);
-        dataNascimentoLabel.setForeground(Color.WHITE);
-        telefoneLabel.setForeground(Color.WHITE);
-        enderecoLabel.setForeground(Color.WHITE);
-
-        inputPanel.add(cpfLabel);
-        inputPanel.add(cpfField);
-        inputPanel.add(nomeLabel);
-        inputPanel.add(nomeField);
-        // inputPanel.add(new JLabel("Histórico Médico:"));
-        // inputPanel.add(historicoMedicoField);
-        inputPanel.add(dataNascimentoLabel);
-        inputPanel.add(dataNascimentoField);
-        inputPanel.add(telefoneLabel);
-        inputPanel.add(telefoneField);
-        inputPanel.add(enderecoLabel);
-        inputPanel.add(enderecoField);
-        //adicionando emptyborder        
-        inputPanel.setBorder(BorderFactory.createEmptyBorder(100, 400, 20, 500));
+        inputPanel.setBorder(BorderFactory.createEmptyBorder(100, 400, 20, 400));
         inputPanel.setBackground(Color.decode("#08281f"));
         add(inputPanel, BorderLayout.NORTH); // Coloca o painel de inputs no topo
 
@@ -92,22 +92,27 @@ public class ClinicaFrame extends JFrame {
         JButton deleteButton = new JButton("Deletar");
         JButton editButton = new JButton("Editar");
         addButton.setBackground(Color.decode("#32CD32"));
-        // addButton.setForeground(Color.WHITE);
         deleteButton.setBackground(Color.decode("#B22222"));
         deleteButton.setForeground(Color.WHITE);
         buttonPanel.add(addButton);
         buttonPanel.add(deleteButton);
         buttonPanel.add(editButton);
-        EmptyBorder paddingBorderButtonPanel = new EmptyBorder(0,0,0,0);
-        LineBorder lineBorderButtonPanel = new LineBorder(Color.WHITE);
-        buttonPanel.setBorder(new CompoundBorder(paddingBorderButtonPanel, lineBorderButtonPanel));
+
+        buttonPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 0), new LineBorder(Color.WHITE, 15)));
         buttonPanel.setBackground(Color.decode("#08281f"));
         add(buttonPanel, BorderLayout.CENTER); // Coloca o painel de botões no centro
 
-        // Painel para lista de pacientes
-        pacienteListPanel = new JPanel();
-        pacienteListPanel.setLayout(new BoxLayout(pacienteListPanel, BoxLayout.Y_AXIS));
-        JScrollPane scrollPane = new JScrollPane(pacienteListPanel);
+        // Configuração da tabela
+        String[] columnNames = {"CPF", "Nome", "Data Nascimento", "Telefone", "Endereço"};
+        tableModel = new DefaultTableModel(columnNames, 0);
+        pacientesTable = new JTable(tableModel);
+        scrollPane = new JScrollPane(pacientesTable);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        
+        // Definindo a altura do scrollPane para ocupar metade da tela
+        scrollPane.setPreferredSize(new Dimension(screenSize.width, screenSize.height / 2));
+
         add(scrollPane, BorderLayout.SOUTH); // Coloca a lista de pacientes na parte inferior
 
         // Ação do botão Adicionar
@@ -115,16 +120,15 @@ public class ClinicaFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (cpfField.getText().isEmpty() || nomeField.getText().isEmpty() ||
-                    // historicoMedicoField.getText().isEmpty()
-                    dataNascimentoField.getText().isEmpty() ||
-                    telefoneField.getText().isEmpty() || enderecoField.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos!", "Erro", JOptionPane.ERROR_MESSAGE);
-                        limparCampos();
+                        dataNascimentoField.getText().isEmpty() || telefoneField.getText().isEmpty()
+                        || enderecoField.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos!", "Erro",
+                            JOptionPane.ERROR_MESSAGE);
+                    limparCampos();
                 } else {
                     Paciente paciente = new Paciente();
                     paciente.setCpf(cpfField.getText());
                     paciente.setNome(nomeField.getText());
-                    // paciente.setHistoricoMedico(historicoMedicoField.getText());
                     paciente.setDataNascimento(dataNascimentoField.getText());
                     paciente.setTelefone(telefoneField.getText());
                     paciente.setEndereco(enderecoField.getText());
@@ -133,21 +137,28 @@ public class ClinicaFrame extends JFrame {
 
                     // Limpar os campos após adicionar
                     limparCampos();
-                    atualizarListaPacientes();
+                    atualizarListaPacientes(); // Atualiza a lista na interface
                 }
             }
         });
 
-        // Ação do botão Deletar (simplesmente deleta pelo nome como antes)
+        // Ação do botão Deletar
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nome = JOptionPane.showInputDialog("Nome do Paciente a deletar:");
-                if (nome != null && !nome.isEmpty()) {
+                if (nome != null && !nome.isEmpty() ) {
                     Paciente paciente = new Paciente();
                     paciente.setNome(nome);
-                    pacienteController.deletarPaciente(paciente);
-                    atualizarListaPacientes();
+                    
+                    int resposta = JOptionPane.showConfirmDialog(null, "Deseja deletar o Paciente "+nome+"?","", JOptionPane.YES_NO_OPTION);
+                    if (resposta == JOptionPane.YES_OPTION) {
+                        pacienteController.deletarPaciente(paciente);
+                        JOptionPane.showMessageDialog(null, "Paciente "+paciente.getNome()+"foi deletado!!!");
+                        atualizarListaPacientes(); // Atualiza a lista na interface
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Usuário não encontrado");
                 }
             }
         });
@@ -158,17 +169,25 @@ public class ClinicaFrame extends JFrame {
 
     // Método para atualizar a lista de pacientes
     private void atualizarListaPacientes() {
-        pacienteListPanel.removeAll(); // Limpa os componentes atuais
-        pacienteController.listarPaciente(pacienteListPanel); // Preenche com a tabela atualizada
-        pacienteListPanel.revalidate(); // Atualiza a interface
-        pacienteListPanel.repaint(); // Repinta para garantir que os novos dados sejam exibidos
+        tableModel.setRowCount(0); // Limpa os dados atuais da tabela
+        pacientesList = pacienteController.listarPacientes(); // Obtém a lista de pacientes
+    
+        for (Paciente paciente : pacientesList) {
+            // Adiciona as informações do paciente à tabela
+            tableModel.addRow(new Object[]{
+                paciente.getCpf(),
+                paciente.getNome(),
+                paciente.getDataNascimento(),
+                paciente.getTelefone(),
+                paciente.getEndereco()
+            });
+        }
     }
 
     // Método para limpar os campos após adicionar
     private void limparCampos() {
         cpfField.setText("");
         nomeField.setText("");
-        // historicoMedicoField.setText("");
         dataNascimentoField.setText("");
         telefoneField.setText("");
         enderecoField.setText("");
