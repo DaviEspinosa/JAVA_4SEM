@@ -81,7 +81,7 @@ public class ClinicaFrame extends JFrame {
            inputPanel.add(enderecoLabel);
            inputPanel.add(enderecoField);
 
-        inputPanel.setBorder(BorderFactory.createEmptyBorder(100, 400, 20, 400));
+        inputPanel.setBorder(BorderFactory.createEmptyBorder(100, 300, 20, 300));
         inputPanel.setBackground(Color.decode("#08281f"));
         add(inputPanel, BorderLayout.NORTH); // Coloca o painel de inputs no topo
 
