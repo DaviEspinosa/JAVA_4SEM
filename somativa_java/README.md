@@ -46,7 +46,7 @@ O Sistema de Gerenciamento de Clínica Médica "Clínica Saúde" será uma aplic
     - **Tecnologias:**
         - Frontend: Java Swing para o desenvolvimento da interface gráfica.
         - Backend: Java com integração ao banco de dados e lógica de negócio.
-        - Banco de Dados: MongoDB para armazenamento de dados não relacionais.
+        - Banco de Dados: PostgresSQL para armazenamento de dados relacionais.
 
 <hr>
 
@@ -87,9 +87,14 @@ classDiagram
         +void agendar()
         +void cancelar()
     }
+    class Funcionario {
+        +String nome
+        +String senha
+    }
+
     Paciente "1" o-- "0..*" Consulta : possui
     Medico "1" o-- "0..*" Consulta : realiza
-
+    Funcionario "1" -- "0..*" Consulta : gerencia
 ```
 **Diagrama de Fluxo:**
 
