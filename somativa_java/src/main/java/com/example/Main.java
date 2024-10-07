@@ -4,7 +4,6 @@ import java.sql.Connection;
 import com.example.connection.ConnectionFactory;
 import com.example.controller.FuncionarioController;
 import com.example.controller.PacienteController;
-import com.example.view.ClinicaFrame;
 import com.example.view.LoginFuncionario;
 
 public class Main {

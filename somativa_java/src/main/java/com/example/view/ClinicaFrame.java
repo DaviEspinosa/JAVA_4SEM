@@ -41,7 +41,14 @@ public class ClinicaFrame extends JFrame {
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(3, 2, 10, 10)); // Grade de 3 linhas e 2 colunas
 
-        cpfField = new JTextField();
+        try {
+            MaskFormatter maskFormatter = new MaskFormatter("###.###.###-##");
+            maskFormatter.setPlaceholderCharacter('_');
+            cpfField = new JFormattedTextField(maskFormatter);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+
         nomeField = new JTextField();
 
         try {
