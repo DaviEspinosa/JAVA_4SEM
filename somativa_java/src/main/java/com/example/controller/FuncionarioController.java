@@ -5,7 +5,7 @@ import java.sql.Connection;
 import com.example.connection.FuncionarioDAO;
 import com.example.model.Funcionario;
 
-public class FuncionarioController {
+public class FuncionarioController extends UsuarioController{
     private FuncionarioDAO funcionarioDAO;
     private PacienteController pacienteController;
     public FuncionarioController(Connection connection, PacienteController pacienteController){
@@ -21,6 +21,7 @@ public class FuncionarioController {
         funcionarioDAO.cadastrarFuncionario(funcionario);
     }
 
+    @Override
     public boolean validacao(String nome, String senha) {
         // Cria um objeto Funcionario com os parâmetros recebidos
         Funcionario funcionario = new Funcionario();

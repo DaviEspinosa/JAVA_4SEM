@@ -1,21 +1,17 @@
 package com.example.model;
 
-import org.mindrot.jbcrypt.BCrypt;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Funcionario {
-    //atributos funcionario
+@Getter
+@Setter
+public class Administrador {
+    // atributos
     private int id;
     private String nome;
     private String senha;
-    public Object funcionario;
-
 }

@@ -18,9 +18,8 @@ import javax.swing.JTextField;
 import com.example.controller.AdministradorController;
 import com.example.controller.FuncionarioController;
 
-public class LoginFuncionario extends JFrame {
+public class LoginAdm extends JFrame {
 
-    private FuncionarioController funcController;
     private AdministradorController admController;
     private JTextField nameField;
     private JPasswordField senhaField;
@@ -29,8 +28,8 @@ public class LoginFuncionario extends JFrame {
     private JButton loginButton;
     private JLabel vazioLabel;
 
-    public LoginFuncionario(FuncionarioController funcionarioController) {
-        this.funcController = funcionarioController;
+    public LoginAdm(AdministradorController administradorController) {
+        this.admController = administradorController; // Corrigido: use o parâmetro para inicializar admController
         setTitle("Login Funcionário");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(screenSize.width, screenSize.height);
@@ -44,25 +43,25 @@ public class LoginFuncionario extends JFrame {
         int altura30Porcento = (int) (tamanhoJanela.height * 0.3);
 
         JPanel panelVazioNorth = new JPanel();
-        panelVazioNorth.setBackground(Color.decode("#006465"));
+        // panelVazioNorth.setBackground(Color.decode("#006465"));
         panelVazioNorth.setPreferredSize(new Dimension(tamanhoJanela.width, altura30Porcento));
         JPanel panelCenter = new JPanel();
-        panelCenter.setLayout(new GridLayout(6, 3, 0,0));
-        panelCenter.setBorder(BorderFactory.createEmptyBorder(50,500,50,500));
-        panelCenter.setBackground(Color.decode("#006465"));
+        panelCenter.setLayout(new GridLayout(6, 3, 0, 0));
+        panelCenter.setBorder(BorderFactory.createEmptyBorder(50, 500, 50, 500));
+        // panelCenter.setBackground(Color.decode("#006465"));
         JPanel panelVazioSouth = new JPanel();
-        panelVazioSouth.setBackground(Color.decode("#006465"));
+        // panelVazioSouth.setBackground(Color.decode("#006465"));
         panelVazioSouth.setPreferredSize(new Dimension(tamanhoJanela.width, altura30Porcento));
 
         nameField = new JTextField(20);
         senhaField = new JPasswordField(20);
-        nameLabel = new JLabel("Nome:");
-        nameLabel.setForeground(Color.white);
-        senhaLabel = new JLabel("Senha:");
-        senhaLabel.setForeground(Color.white);
+        nameLabel = new JLabel("Nome do Administrador:");
+        nameLabel.setForeground(Color.decode("#006465"));
+        senhaLabel = new JLabel("Senha do Administrador:");
+        senhaLabel.setForeground(Color.decode("#006465"));
         loginButton = new JButton("Login");
         loginButton.setForeground(Color.white);
-        loginButton.setBackground(Color.decode("#170b2a"));
+        loginButton.setBackground(Color.decode("#006465"));
         vazioLabel = new JLabel(" ");
 
         panelCenter.add(nameLabel);
@@ -84,23 +83,22 @@ public class LoginFuncionario extends JFrame {
             String senha = new String(senhaField.getPassword());
 
             // Validação de login
-            if (funcController.validacao(nome, senha)) {
+            if (admController.validacao(nome, senha)) {
                 // Login bem-sucedido
                 JOptionPane.showMessageDialog(this, "Login bem-sucedido!");
-                abrirClinicaFrame(); // Chamar o método para abrir a próxima janela
+                abrirAdmFrame(); // Chamar o método para abrir a próxima janela
             } else {
                 // Falha no login
                 JOptionPane.showMessageDialog(this, "Nome ou senha incorretos. Tente novamente.", "Erro de Login",
                         JOptionPane.ERROR_MESSAGE);
             }
         });
+        // Método para abrir o ClinicaFrame após login bem-sucedido
+        
     }
-
-    // Método para abrir o ClinicaFrame após login bem-sucedido
-    private void abrirClinicaFrame() {
-        ClinicaFrame clinicaFrame = new ClinicaFrame(funcController.getpPacienteController(), admController);
-        clinicaFrame.setVisible(true);
+    private void abrirAdmFrame() {
+        LoginAdm loginAdm = new LoginAdm(admController);
+        loginAdm.setVisible(true);
         this.dispose(); // Fecha a tela de login
     }
-
 }

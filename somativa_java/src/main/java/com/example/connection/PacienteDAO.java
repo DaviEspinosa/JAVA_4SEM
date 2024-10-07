@@ -13,7 +13,7 @@ import com.example.model.Paciente;
 public class PacienteDAO {
 
     private Connection connection;
-    private List<Paciente> listPacientes;
+    // private List<Paciente> listPacientes;
 
     public PacienteDAO(Connection connection) {
         this.connection = ConnectionFactory.createConnection();

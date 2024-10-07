@@ -18,8 +18,6 @@ public class PacienteController {
     private List<Paciente> listaPaciente;
     private PacienteDAO pacienteDAO;
 
-    
-
     public PacienteController(Connection connection) {
         listaPaciente = new ArrayList<Paciente>();
         this.pacienteDAO = new PacienteDAO(connection);

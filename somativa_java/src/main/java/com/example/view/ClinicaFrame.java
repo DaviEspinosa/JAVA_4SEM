@@ -6,16 +6,20 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
+
+import com.example.controller.AdministradorController;
 import com.example.controller.PacienteController;
 import com.example.model.Paciente;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.text.ParseException;
 import java.util.List;
 
 public class ClinicaFrame extends JFrame {
     private PacienteController pacienteController;
+    private AdministradorController admController;
     private JTable pacientesTable;
     private DefaultTableModel tableModel;
     private JScrollPane scrollPane;
@@ -28,8 +32,9 @@ public class ClinicaFrame extends JFrame {
     private JTextField telefoneField;
     private JTextField enderecoField;
 
-    public ClinicaFrame(PacienteController controller) {
+    public ClinicaFrame(PacienteController controller, AdministradorController admController) {
         this.pacienteController = controller;
+        this.admController = admController;
         setTitle("Gerenciamento de Pacientes");
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -41,7 +46,13 @@ public class ClinicaFrame extends JFrame {
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(3, 2, 10, 10)); // Grade de 3 linhas e 2 colunas
 
-        cpfField = new JTextField();
+        try {
+            MaskFormatter maskFormatter = new MaskFormatter("###.###.###-##");
+            maskFormatter.setPlaceholderCharacter('_');
+            cpfField = new JFormattedTextField(maskFormatter);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
         nomeField = new JTextField();
 
         try {
@@ -52,34 +63,40 @@ public class ClinicaFrame extends JFrame {
             ex.printStackTrace();
         }
 
-        telefoneField = new JTextField();
+        try {
+            MaskFormatter maskFormatter = new MaskFormatter("(##)#####-####");
+            maskFormatter.setPlaceholderCharacter('_');
+            telefoneField = new JFormattedTextField(maskFormatter);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
         enderecoField = new JTextField();
 
         // Criando Labels
-           // Criando Labels
-           JLabel cpfLabel = new JLabel("CPF:");
-           JLabel nomeLabel = new JLabel("Nome:");
-           JLabel dataNascimentoLabel = new JLabel("Data de Nascimento:");
-           JLabel telefoneLabel = new JLabel("Telefone:");
-           JLabel enderecoLabel = new JLabel("Endereço:");
-   
-           // Atribuindo cor de texto para as labels
-           cpfLabel.setForeground(Color.WHITE);
-           nomeLabel.setForeground(Color.WHITE);
-           dataNascimentoLabel.setForeground(Color.WHITE);
-           telefoneLabel.setForeground(Color.WHITE);
-           enderecoLabel.setForeground(Color.WHITE);
-   
-           inputPanel.add(cpfLabel);
-           inputPanel.add(cpfField);
-           inputPanel.add(nomeLabel);
-           inputPanel.add(nomeField);
-           inputPanel.add(dataNascimentoLabel);
-           inputPanel.add(dataNascimentoField);
-           inputPanel.add(telefoneLabel);
-           inputPanel.add(telefoneField);
-           inputPanel.add(enderecoLabel);
-           inputPanel.add(enderecoField);
+        // Criando Labels
+        JLabel cpfLabel = new JLabel("CPF:");
+        JLabel nomeLabel = new JLabel("Nome:");
+        JLabel dataNascimentoLabel = new JLabel("Data de Nascimento:");
+        JLabel telefoneLabel = new JLabel("Telefone:");
+        JLabel enderecoLabel = new JLabel("Endereço:");
+
+        // Atribuindo cor de texto para as labels
+        cpfLabel.setForeground(Color.WHITE);
+        nomeLabel.setForeground(Color.WHITE);
+        dataNascimentoLabel.setForeground(Color.WHITE);
+        telefoneLabel.setForeground(Color.WHITE);
+        enderecoLabel.setForeground(Color.WHITE);
+
+        inputPanel.add(cpfLabel);
+        inputPanel.add(cpfField);
+        inputPanel.add(nomeLabel);
+        inputPanel.add(nomeField);
+        inputPanel.add(dataNascimentoLabel);
+        inputPanel.add(dataNascimentoField);
+        inputPanel.add(telefoneLabel);
+        inputPanel.add(telefoneField);
+        inputPanel.add(enderecoLabel);
+        inputPanel.add(enderecoField);
 
         inputPanel.setBorder(BorderFactory.createEmptyBorder(100, 300, 20, 300));
         inputPanel.setBackground(Color.decode("#006465"));
@@ -102,14 +119,45 @@ public class ClinicaFrame extends JFrame {
         buttonPanel.setBackground(Color.decode("#006465"));
         add(buttonPanel, BorderLayout.CENTER); // Coloca o painel de botões no centro
 
+        // ================CRIANDO MENUBAR=================
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.setBackground(Color.decode("#06373d"));
+        JMenu menu = new JMenu("| Entrar |");
+        JMenu menuInfo = new JMenu("| Informações |");
+        JMenu menuService = new JMenu("| Serviços |");
+        JMenu menuFunc = new JMenu("| Funcionários |");
+        menu.setForeground(Color.WHITE);
+        menuInfo.setForeground(Color.WHITE);
+        menuService.setForeground(Color.WHITE);
+        menuFunc.setForeground(Color.WHITE);
+        JMenuItem loginAdmItem = new JMenuItem("Entrar como Administrador");
+        JMenuItem loginMedicoItem = new JMenuItem("Entrar como Médico");
+
+        loginAdmItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LoginAdm loginAdm = new LoginAdm(admController);  
+                loginAdm.setVisible(true); 
+            }
+        });
+
+
+        menuBar.add(menu);
+        menuBar.add(menuInfo);
+        menuBar.add(menuService);
+        menuBar.add(menuFunc);
+        menu.add(loginAdmItem);
+        menu.add(loginMedicoItem);
+        setJMenuBar(menuBar);
+
         // Configuração da tabela
-        String[] columnNames = {"CPF", "Nome", "Data Nascimento", "Telefone", "Endereço"};
+        String[] columnNames = { "CPF", "Nome", "Data Nascimento", "Telefone", "Endereço" };
         tableModel = new DefaultTableModel(columnNames, 0);
         pacientesTable = new JTable(tableModel);
         scrollPane = new JScrollPane(pacientesTable);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        
+
         // Definindo a altura do scrollPane para ocupar metade da tela
         scrollPane.setPreferredSize(new Dimension(screenSize.width, screenSize.height / 2));
 
@@ -147,17 +195,18 @@ public class ClinicaFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nome = JOptionPane.showInputDialog("Nome do Paciente a deletar:");
-                if (nome != null && !nome.isEmpty() ) {
+                if (nome != null && !nome.isEmpty()) {
                     Paciente paciente = new Paciente();
                     paciente.setNome(nome);
-                    
-                    int resposta = JOptionPane.showConfirmDialog(null, "Deseja deletar o Paciente "+nome+"?","", JOptionPane.YES_NO_OPTION);
+
+                    int resposta = JOptionPane.showConfirmDialog(null, "Deseja deletar o Paciente " + nome + "?", "",
+                            JOptionPane.YES_NO_OPTION);
                     if (resposta == JOptionPane.YES_OPTION) {
                         pacienteController.deletarPaciente(paciente);
-                        JOptionPane.showMessageDialog(null, "Paciente "+paciente.getNome()+"foi deletado!!!");
+                        JOptionPane.showMessageDialog(null, "Paciente " + paciente.getNome() + "foi deletado!!!");
                         atualizarListaPacientes(); // Atualiza a lista na interface
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Usuário não encontrado");
                 }
             }
@@ -171,15 +220,15 @@ public class ClinicaFrame extends JFrame {
     private void atualizarListaPacientes() {
         tableModel.setRowCount(0); // Limpa os dados atuais da tabela
         pacientesList = pacienteController.listarPacientes(); // Obtém a lista de pacientes
-    
+
         for (Paciente paciente : pacientesList) {
             // Adiciona as informações do paciente à tabela
-            tableModel.addRow(new Object[]{
-                paciente.getCpf(),
-                paciente.getNome(),
-                paciente.getDataNascimento(),
-                paciente.getTelefone(),
-                paciente.getEndereco()
+            tableModel.addRow(new Object[] {
+                    paciente.getCpf(),
+                    paciente.getNome(),
+                    paciente.getDataNascimento(),
+                    paciente.getTelefone(),
+                    paciente.getEndereco()
             });
         }
     }

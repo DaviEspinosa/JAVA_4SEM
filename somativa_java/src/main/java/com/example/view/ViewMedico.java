@@ -1,5 +1,5 @@
 package com.example.view;
 
-public class AreaMedico {
+public class ViewMedico {
     
 }

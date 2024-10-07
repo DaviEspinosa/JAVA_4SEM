@@ -56,4 +56,16 @@ public class FuncionarioDAO {
             return false; // Se houver algum erro na consulta
         }
     }
+
+    public Funcionario buscarPorNome(String nome, String senha) {
+        // Lógica para buscar o funcionário no banco de dados pelo nome
+        // Certifique-se de que a senha armazenada no banco é recuperada corretamente
+        String sql = "SELECT nome, senha FROM funcionarios WHERE nome = ?";
+        // Execute a query e retorne um objeto Funcionario
+        // Exemplo:
+        Funcionario funcionario = new Funcionario();
+        funcionario.setNome(nome);
+        funcionario.setSenha(senha);  // Exemplo de senha hasheada vinda do banco
+        return funcionario;
+    }
 }
