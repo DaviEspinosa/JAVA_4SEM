@@ -82,7 +82,7 @@ public class ClinicaFrame extends JFrame {
            inputPanel.add(enderecoField);
 
         inputPanel.setBorder(BorderFactory.createEmptyBorder(100, 300, 20, 300));
-        inputPanel.setBackground(Color.decode("#08281f"));
+        inputPanel.setBackground(Color.decode("#006465"));
         add(inputPanel, BorderLayout.NORTH); // Coloca o painel de inputs no topo
 
         // Painel para os botões
@@ -99,7 +99,7 @@ public class ClinicaFrame extends JFrame {
         buttonPanel.add(editButton);
 
         buttonPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 0), new LineBorder(Color.WHITE, 15)));
-        buttonPanel.setBackground(Color.decode("#08281f"));
+        buttonPanel.setBackground(Color.decode("#006465"));
         add(buttonPanel, BorderLayout.CENTER); // Coloca o painel de botões no centro
 
         // Configuração da tabela
