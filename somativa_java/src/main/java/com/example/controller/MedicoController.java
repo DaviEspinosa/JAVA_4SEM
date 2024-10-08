@@ -2,9 +2,9 @@ package com.example.controller;
 
 import java.sql.Connection;
 
-import com.example.connection.AdministradorDAO;
+
 import com.example.connection.MedicoDAO;
-import com.example.model.Administrador;
+
 import com.example.model.Medico;
 
 public class MedicoController extends UsuarioController {

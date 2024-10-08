@@ -15,8 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import com.example.controller.AdministradorController;
-import com.example.controller.FuncionarioController;
 import com.example.controller.MedicoController;
 import com.example.controller.PacienteController;
 

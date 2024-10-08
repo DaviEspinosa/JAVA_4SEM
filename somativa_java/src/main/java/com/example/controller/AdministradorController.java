@@ -3,9 +3,9 @@ package com.example.controller;
 import java.sql.Connection;
 
 import com.example.connection.AdministradorDAO;
-import com.example.connection.FuncionarioDAO;
+
 import com.example.model.Administrador;
-import com.example.model.Funcionario;
+
 
 public class AdministradorController extends UsuarioController {
 

@@ -2,18 +2,13 @@ package com.example;
 
 import java.sql.Connection;
 
-import org.postgresql.shaded.com.ongres.stringprep.Option;
-
 import com.example.connection.ConnectionFactory;
 import com.example.controller.AdministradorController;
 import com.example.controller.FuncionarioController;
 import com.example.controller.MedicoController;
 import com.example.controller.PacienteController;
 import com.example.model.Paciente;
-import com.example.view.ClinicaFrame;
-import com.example.view.ClinicaFrameMedico;
-import com.example.view.LoginFuncionario;
-import com.example.view.LoginMedico;
+
 import com.example.view.OptionFrame;
 
 public class Main {
@@ -27,16 +22,28 @@ public class Main {
         FuncionarioController funcionarioController = new FuncionarioController(connection, pacienteController);
         MedicoController medicoController = new MedicoController(connection);
         // Criar o frame e torná-lo visível
-        // LoginFuncionario frame = new LoginFuncionario(funcionarioController);
-        // ClinicaFrame frame = new ClinicaFrame(pacientecontroller,admController);
-        ClinicaFrameMedico frame = new ClinicaFrameMedico(pacienteController);
-        // LoginMedico frame = new LoginMedico(medicoController,pacienteController);
-        // OptionFrame frame = new OptionFrame(admController, funcionarioController, medicoController, pacienteController);
+        OptionFrame frame = new OptionFrame(admController, funcionarioController, medicoController, pacienteController);
         frame.setVisible(true);
-
+        
         // Ao final, fechar a conexão com o banco de dados
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             ConnectionFactory.closeConnection();
         }));
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// LoginFuncionario frame = new LoginFuncionario(funcionarioController);
+// ClinicaFrame frame = new ClinicaFrame(pacientecontroller,admController);
+// ClinicaFrameMedico frame = new ClinicaFrameMedico(pacienteController);
+// LoginMedico frame = new LoginMedico(medicoController,pacienteController);

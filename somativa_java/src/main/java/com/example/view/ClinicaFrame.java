@@ -13,7 +13,6 @@ import com.example.model.Paciente;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
 import java.text.ParseException;
 import java.util.List;
 

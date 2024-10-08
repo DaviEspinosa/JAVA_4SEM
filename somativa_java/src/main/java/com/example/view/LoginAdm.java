@@ -16,7 +16,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.example.controller.AdministradorController;
-import com.example.controller.FuncionarioController;
+
 
 public class LoginAdm extends JFrame {
 
