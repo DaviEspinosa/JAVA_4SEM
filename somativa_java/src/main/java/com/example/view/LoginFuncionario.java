@@ -5,11 +5,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -17,11 +22,15 @@ import javax.swing.JTextField;
 
 import com.example.controller.AdministradorController;
 import com.example.controller.FuncionarioController;
+import com.example.controller.MedicoController;
+import com.example.controller.PacienteController;
 
 public class LoginFuncionario extends JFrame {
 
     private FuncionarioController funcController;
     private AdministradorController admController;
+    private MedicoController medicoController;
+    private PacienteController pacienteController;
     private JTextField nameField;
     private JPasswordField senhaField;
     private JLabel nameLabel;
@@ -78,6 +87,28 @@ public class LoginFuncionario extends JFrame {
         this.add(panelVazioNorth, BorderLayout.NORTH);
         this.add(panelCenter, BorderLayout.CENTER);
         this.add(panelVazioSouth, BorderLayout.SOUTH);
+
+// ================CRIANDO MENUBAR=================
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.setBackground(Color.decode("#06373d"));
+        JMenu menu = new JMenu("| Opções |");
+        menu.setForeground(Color.WHITE);
+        JMenuItem voltarItem = new JMenuItem("Voltar");
+        JMenuItem contatosItem = new JMenuItem("Contatos");
+
+        voltarItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                OptionFrame optionFrame = new OptionFrame(admController, funcionarioController, medicoController,pacienteController);
+                optionFrame.setVisible(true);
+            }
+        });
+
+        menuBar.add(menu);
+        menu.add(voltarItem);
+        menu.add(contatosItem);
+        setJMenuBar(menuBar);
+
 
         loginButton.addActionListener(e -> {
             String nome = nameField.getText();
