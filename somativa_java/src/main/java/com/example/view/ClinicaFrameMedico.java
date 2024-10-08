@@ -7,13 +7,17 @@ import java.awt.event.ActionListener;
 
 import com.example.controller.PacienteController;
 import com.example.model.Paciente;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 public class ClinicaFrameMedico extends JFrame {
     private PacienteController pacienteController;
-    private JTextField buscaNomeField;  // Campo para busca
+    private JTextField buscaNomeField; // Campo para busca
     private JTextField nomeField;
-    private JTextField dataNascimentoField;
+    private JTextField dataConsultaField;
     private JTextField historicoMedicoField;
+    private JTable pacientesTable;
+    private DefaultTableModel tableModel;
 
     public ClinicaFrameMedico(PacienteController pacienteController) {
         this.pacienteController = pacienteController;
@@ -28,7 +32,7 @@ public class ClinicaFrameMedico extends JFrame {
         buscaPanel.setLayout(new GridLayout(2, 2, 10, 10));
         buscaPanel.setBorder(BorderFactory.createTitledBorder("Nome Paciente"));
 
-        buscaNomeField = new JTextField(20);  // Campo para o nome da busca
+        buscaNomeField = new JTextField(20); // Campo para o nome da busca
         buscaNomeField.setFont(new Font("Arial", Font.PLAIN, 14));
         JButton buscarButton = new JButton("Buscar");
 
@@ -44,15 +48,16 @@ public class ClinicaFrameMedico extends JFrame {
         dadosPanel.setLayout(new GridLayout(2, 4, 10, 10));
 
         nomeField = new JTextField("");
-        dataNascimentoField = new JTextField("");
+        dataConsultaField = new JTextField("");
         historicoMedicoField = new JTextField("");
 
         dadosPanel.add(new JLabel("Nome:"));
         dadosPanel.add(nomeField);
-        dadosPanel.add(new JLabel("Data de Nascimento:"));
-        dadosPanel.add(dataNascimentoField);
+        dadosPanel.add(new JLabel("Data da Consulta:"));
+        dadosPanel.add(dataConsultaField);
 
         JPanel panelNorth = new JPanel();
+        panelNorth.setPreferredSize(new Dimension(1000, 88));
         panelNorth.add(buscaPanel);
         panelNorth.add(dadosPanel);
         add(panelNorth, BorderLayout.NORTH);
@@ -60,7 +65,7 @@ public class ClinicaFrameMedico extends JFrame {
         // Histórico médico no centro
         JPanel historicoPanel = new JPanel();
         historicoPanel.setLayout(new GridLayout(3, 1, 10, 10));
-        
+
         historicoPanel.add(new JLabel("Histórico Médico:"));
         historicoPanel.add(historicoMedicoField);
 
@@ -71,51 +76,81 @@ public class ClinicaFrameMedico extends JFrame {
         salvarButton.setBackground(Color.decode("#006465"));
         salvarButton.setForeground(Color.white); // largura de 150 e altura de 40
         salvarPanel.add(salvarButton);
-        
+
         historicoPanel.add(salvarPanel);
-        historicoMedicoField.setPreferredSize(new Dimension(500, 100));
+        historicoMedicoField.setPreferredSize(new Dimension(500, 15));
 
         JPanel panelCenter = new JPanel();
         panelCenter.add(historicoPanel);
         add(panelCenter, BorderLayout.CENTER);
 
+        // Configuração da tabela
+        String[] columnNames = { "CPF", "Nome", "Data Consulta", "Telefone", "Endereço" };
+        tableModel = new DefaultTableModel(columnNames, 0);
+        pacientesTable = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(pacientesTable);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        add(scrollPane, BorderLayout.SOUTH); // Coloca a lista de pacientes na parte inferior
+
         // Ação do botão salvar
         salvarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nomePaciente = buscaNomeField.getText();  // Nome do paciente a ser atualizado
-                String novaDataNascimento = dataNascimentoField.getText();
+                String nomePaciente = buscaNomeField.getText(); // Nome do paciente a ser atualizado
                 String novoHistoricoMedico = historicoMedicoField.getText();
-        
+
                 // Atualiza o paciente no banco de dados
                 pacienteController.editarPaciente(nomePaciente, novoHistoricoMedico);
                 // Limpar os campos após salvar
                 nomeField.setText("");
-                dataNascimentoField.setText("");
+                dataConsultaField.setText("");
                 historicoMedicoField.setText("");
-
-                JOptionPane.showMessageDialog(null,"Ocorreu um Erro ao Salvar!!");
+                atualizarListaPacientes(); // Atualiza a lista na interface
             }
         });
-        
+
         // Ação do botão buscar
         buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nomePaciente = buscaNomeField.getText();  // Pega o nome do campo de busca
+                String nomePaciente = buscaNomeField.getText(); // Pega o nome do campo de busca
                 Paciente paciente = pacienteController.buscarPacientePorNome(nomePaciente);
 
                 if (paciente != null) {
                     nomeField.setText(paciente.getNome());
-                    dataNascimentoField.setText(paciente.getDataNascimento());
+                    dataConsultaField.setText(paciente.getDataConsulta());
                     historicoMedicoField.setText(paciente.getHistoricoMedico());
                 } else {
                     JOptionPane.showMessageDialog(null, "Paciente não encontrado.");
                     nomeField.setText("");
-                    dataNascimentoField.setText("");
+                    dataConsultaField.setText("");
                     historicoMedicoField.setText("");
                 }
+
+                atualizarListaPacientes(); // Atualiza a lista após busca
             }
         });
+
+        // Inicializa a lista de pacientes
+        atualizarListaPacientes();
+    }
+
+    // Método para atualizar a lista de pacientes na tabela
+    private void atualizarListaPacientes() {
+        tableModel.setRowCount(0); // Limpa os dados atuais da tabela
+        List<Paciente> pacientesList = pacienteController.listarPacientes(); // Obtém a lista de pacientes
+
+        for (Paciente paciente : pacientesList) {
+            // Adiciona as informações do paciente à tabela
+            tableModel.addRow(new Object[] {
+                    paciente.getCpf(),
+                    paciente.getNome(),
+                    paciente.getDataConsulta(),
+                    paciente.getTelefone(),
+                    paciente.getEndereco()
+            });
+        }
     }
 }

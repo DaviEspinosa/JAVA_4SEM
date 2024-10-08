@@ -29,9 +29,9 @@ public class Main {
         // Criar o frame e torná-lo visível
         // LoginFuncionario frame = new LoginFuncionario(funcionarioController);
         // ClinicaFrame frame = new ClinicaFrame(pacientecontroller,admController);
-        // ClinicaFrameMedico frame = new ClinicaFrameMedico(pacienteController);
+        ClinicaFrameMedico frame = new ClinicaFrameMedico(pacienteController);
         // LoginMedico frame = new LoginMedico(medicoController,pacienteController);
-        OptionFrame frame = new OptionFrame(admController, funcionarioController, medicoController, pacienteController);
+        // OptionFrame frame = new OptionFrame(admController, funcionarioController, medicoController, pacienteController);
         frame.setVisible(true);
 
         // Ao final, fechar a conexão com o banco de dados

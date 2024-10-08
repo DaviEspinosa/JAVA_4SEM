@@ -11,11 +11,11 @@ import com.example.model.Medico;
 public class MedicoDAO {
     private Connection connection;
 
-    public MedicoDAO(Connection connection){
+    public MedicoDAO(Connection connection) {
         this.connection = ConnectionFactory.createConnection();
     }
 
-      public boolean validarMedico(Medico medico) {
+    public boolean validarMedico(Medico medico) {
         String sql = "SELECT * FROM medico WHERE nome = ? AND senha = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -38,4 +38,6 @@ public class MedicoDAO {
             return false; // Se houver algum erro na consulta
         }
     }
+
+
 }

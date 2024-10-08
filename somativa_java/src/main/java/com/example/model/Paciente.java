@@ -16,7 +16,7 @@ public class Paciente {
     private String cpf;
     private String nome;
     private String historicoMedico;
-    private String dataNascimento;
+    private String dataConsulta;
     private String telefone;
     private String endereco;
     

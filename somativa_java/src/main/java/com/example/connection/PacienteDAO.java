@@ -20,14 +20,14 @@ public class PacienteDAO {
     }
 
     public void addPaciente(Paciente paciente){
-        String sql = "INSERT INTO pacientes (cpf, nome, historico_medico, data_nascimento, telefone, endereco) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO pacientes (cpf, nome, historico_medico, data_consulta, telefone, endereco) VALUES (?,?,?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             if (preparedStatement!=null) {
              
             preparedStatement.setString(1, paciente.getCpf());
             preparedStatement.setString(2, paciente.getNome());
             preparedStatement.setString(3, paciente.getHistoricoMedico());
-            preparedStatement.setString(4, paciente.getDataNascimento());
+            preparedStatement.setString(4, paciente.getDataConsulta());
             preparedStatement.setString(5, paciente.getTelefone());
             preparedStatement.setString(6, paciente.getEndereco());
 
@@ -57,7 +57,7 @@ public class PacienteDAO {
                     paciente.setCpf(rs.getString("cpf"));
                     paciente.setNome(rs.getString("nome"));
                     paciente.setHistoricoMedico(rs.getString("historico_medico"));
-                    paciente.setDataNascimento(rs.getString("data_nascimento"));
+                    paciente.setDataConsulta(rs.getString("data_consulta"));
                     paciente.setTelefone(rs.getString("telefone"));
                     paciente.setEndereco(rs.getString("endereco"));
 
@@ -96,7 +96,7 @@ public class PacienteDAO {
     // buscar paciente
     public Paciente buscarPacientePorNome(String nome) {
         Paciente paciente = null;
-        String sql = "SELECT nome, data_nascimento, historico_medico FROM pacientes WHERE nome =?";
+        String sql = "SELECT nome, data_consulta, historico_medico FROM pacientes WHERE nome =?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             // Define o nome do paciente a ser buscado
             preparedStatement.setString(1, nome);
@@ -109,7 +109,7 @@ public class PacienteDAO {
                 paciente = new Paciente();
                 paciente.setNome(resultSet.getString("nome"));
                 paciente.setHistoricoMedico(resultSet.getString("historico_medico"));
-                paciente.setDataNascimento(resultSet.getString("data_nascimento"));
+                paciente.setDataConsulta(resultSet.getString("data_consulta"));
 
             }
             
@@ -120,21 +120,27 @@ public class PacienteDAO {
         return paciente;
     }
     
-    public void editarPaciente(String nome, String novoHistoricoMedico) {
+    public boolean editarPaciente(String nome, String novoHistoricoMedico) {
         String sql = "UPDATE pacientes SET historico_medico = ? WHERE nome = ?";
+
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            // preparedStatement.setString(1, novaDataNascimento);
-            preparedStatement.setString(2, novoHistoricoMedico);
-            preparedStatement.setString(3, nome);
-            
+            // Definir os novos valores do histórico médico
+            preparedStatement.setString(1, novoHistoricoMedico);
+            preparedStatement.setString(2, nome);
+
+            // Executa a atualização no banco de dados
             int rowsAffected = preparedStatement.executeUpdate();
+
             if (rowsAffected > 0) {
-                System.out.println("Paciente atualizado com sucesso.");
+                System.out.println("Alterado com sucesso.");
+                return true;
             } else {
                 System.out.println("Paciente não encontrado.");
+                return false;
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
     

@@ -28,7 +28,7 @@ public class ClinicaFrame extends JFrame {
     // Campos de entrada
     private JTextField cpfField;
     private JTextField nomeField;
-    private JFormattedTextField dataNascimentoField;
+    private JFormattedTextField dataConsultaField;
     private JTextField telefoneField;
     private JTextField enderecoField;
 
@@ -58,7 +58,7 @@ public class ClinicaFrame extends JFrame {
         try {
             MaskFormatter maskFormatter = new MaskFormatter("##/##/####");
             maskFormatter.setPlaceholderCharacter('_');
-            dataNascimentoField = new JFormattedTextField(maskFormatter);
+            dataConsultaField = new JFormattedTextField(maskFormatter);
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
@@ -76,14 +76,14 @@ public class ClinicaFrame extends JFrame {
         // Criando Labels
         JLabel cpfLabel = new JLabel("CPF:");
         JLabel nomeLabel = new JLabel("Nome:");
-        JLabel dataNascimentoLabel = new JLabel("Data de Nascimento:");
+        JLabel dataConsultaLabel = new JLabel("Data de Consulta:");
         JLabel telefoneLabel = new JLabel("Telefone:");
         JLabel enderecoLabel = new JLabel("Endereço:");
 
         // Atribuindo cor de texto para as labels
         cpfLabel.setForeground(Color.WHITE);
         nomeLabel.setForeground(Color.WHITE);
-        dataNascimentoLabel.setForeground(Color.WHITE);
+        dataConsultaLabel.setForeground(Color.WHITE);
         telefoneLabel.setForeground(Color.WHITE);
         enderecoLabel.setForeground(Color.WHITE);
 
@@ -91,8 +91,8 @@ public class ClinicaFrame extends JFrame {
         inputPanel.add(cpfField);
         inputPanel.add(nomeLabel);
         inputPanel.add(nomeField);
-        inputPanel.add(dataNascimentoLabel);
-        inputPanel.add(dataNascimentoField);
+        inputPanel.add(dataConsultaLabel);
+        inputPanel.add(dataConsultaField);
         inputPanel.add(telefoneLabel);
         inputPanel.add(telefoneField);
         inputPanel.add(enderecoLabel);
@@ -151,7 +151,7 @@ public class ClinicaFrame extends JFrame {
         setJMenuBar(menuBar);
 
         // Configuração da tabela
-        String[] columnNames = { "CPF", "Nome", "Data Nascimento", "Telefone", "Endereço" };
+        String[] columnNames = { "CPF", "Nome", "Data Consulta", "Telefone", "Endereço" };
         tableModel = new DefaultTableModel(columnNames, 0);
         pacientesTable = new JTable(tableModel);
         scrollPane = new JScrollPane(pacientesTable);
@@ -168,7 +168,7 @@ public class ClinicaFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (cpfField.getText().isEmpty() || nomeField.getText().isEmpty() ||
-                        dataNascimentoField.getText().isEmpty() || telefoneField.getText().isEmpty()
+                        dataConsultaField.getText().isEmpty() || telefoneField.getText().isEmpty()
                         || enderecoField.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos!", "Erro",
                             JOptionPane.ERROR_MESSAGE);
@@ -177,7 +177,7 @@ public class ClinicaFrame extends JFrame {
                     Paciente paciente = new Paciente();
                     paciente.setCpf(cpfField.getText());
                     paciente.setNome(nomeField.getText());
-                    paciente.setDataNascimento(dataNascimentoField.getText());
+                    paciente.setDataConsulta(dataConsultaField.getText());
                     paciente.setTelefone(telefoneField.getText());
                     paciente.setEndereco(enderecoField.getText());
 
@@ -226,7 +226,7 @@ public class ClinicaFrame extends JFrame {
             tableModel.addRow(new Object[] {
                     paciente.getCpf(),
                     paciente.getNome(),
-                    paciente.getDataNascimento(),
+                    paciente.getDataConsulta(),
                     paciente.getTelefone(),
                     paciente.getEndereco()
             });
@@ -237,7 +237,7 @@ public class ClinicaFrame extends JFrame {
     private void limparCampos() {
         cpfField.setText("");
         nomeField.setText("");
-        dataNascimentoField.setText("");
+        dataConsultaField.setText("");
         telefoneField.setText("");
         enderecoField.setText("");
     }
