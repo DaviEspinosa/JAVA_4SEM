@@ -92,5 +92,50 @@ public class PacienteDAO {
             e.printStackTrace();
         }
     }
+
+    // buscar paciente
+    public Paciente buscarPacientePorNome(String nome) {
+        Paciente paciente = null;
+        String sql = "SELECT nome, data_nascimento, historico_medico FROM pacientes WHERE nome =?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            // Define o nome do paciente a ser buscado
+            preparedStatement.setString(1, nome);
+            
+            // Executa a consulta e obtém os resultados
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            // Verifica se há algum registro que corresponde ao nome
+            if (resultSet.next()) {
+                paciente = new Paciente();
+                paciente.setNome(resultSet.getString("nome"));
+                paciente.setHistoricoMedico(resultSet.getString("historico_medico"));
+                paciente.setDataNascimento(resultSet.getString("data_nascimento"));
+
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return paciente;
+    }
+    
+    public void editarPaciente(String nome, String novoHistoricoMedico) {
+        String sql = "UPDATE pacientes SET historico_medico = ? WHERE nome = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            // preparedStatement.setString(1, novaDataNascimento);
+            preparedStatement.setString(2, novoHistoricoMedico);
+            preparedStatement.setString(3, nome);
+            
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Paciente atualizado com sucesso.");
+            } else {
+                System.out.println("Paciente não encontrado.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     
 }

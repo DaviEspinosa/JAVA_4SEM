@@ -16,5 +16,12 @@ public class Medico {
     private String nome;
     private String especialidade;
     private String crm;
-
+    private String senha;
 }
+// CREATE TABLE medico (
+//     id SERIAL PRIMARY KEY,         -- ID do médico, gerado automaticamente
+//     nome VARCHAR(100) NOT NULL,    -- Nome do médico
+//     especialidade VARCHAR(100),    -- Especialidade do médico
+//     crm VARCHAR(20) UNIQUE NOT NULL, -- CRM do médico, deve ser único
+//     senha VARCHAR(255) NOT NULL     -- Senha do médico
+// );

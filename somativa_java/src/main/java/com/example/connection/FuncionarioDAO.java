@@ -8,11 +8,11 @@ import java.sql.SQLException;
 import com.example.model.Funcionario;
 
 public class FuncionarioDAO {
-    private Connection connection;
+private Connection connection;
 
-    public FuncionarioDAO(Connection connection){
-        this.connection = ConnectionFactory.createConnection();
-    }
+public FuncionarioDAO(Connection connection){
+    this.connection = ConnectionFactory.createConnection();
+}
 
     public void cadastrarFuncionario(Funcionario funcionario){
         String sql = "INSERT INTO funcionarios (nome, senha) VALUES (?, ?)";
