@@ -104,6 +104,7 @@ public class LoginMedico extends JFrame {
                 OptionFrame optionFrame = new OptionFrame(admController, funcionarioController, medicoController,
                         pacienteController);
                 optionFrame.setVisible(true);
+                
             }
         });
 
