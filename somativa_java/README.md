@@ -16,23 +16,23 @@ O Sistema de Gerenciamento de Clínica Médica "Clínica Saúde" será uma aplic
     **Sistema será capaz de:**
 
     - **Cadastrar:**
-    Pacientes poderão visualizar um formulário para registrar suas informações, como: CPF, nome, endereço,      telefone, e-mail, data de nascimento e histórico médico.
+    Pacientes poderão visualizar um formulário para registrar suas informações, como: CPF, nome, endereço, telefone, e-mail, data de nascimento e histórico médico.
     <hr>
 
     - **Logar:**
-    Pacientes e profissionais de saúde poderão autenticar-se para acessar suas áreas específicas do sistema     usando CPF e senha.
+    Pacientes e profissionais de saúde poderão autenticar-se para acessar suas áreas específicas do sistema usando CPF e senha.
     <hr>
 
     - **Gerenciamento de Pacientes:**
-    Os profissionais de saúde poderão visualizar e atualizar informações dos pacientes, como histórico de       consultas e tratamentos.
+    Os profissionais de saúde poderão visualizar e atualizar informações dos pacientes, como histórico de consultas e tratamentos.
     <hr>
 
     - **Agendamento de Consultas:**
-    Permitir que os pacientes agendem consultas, visualizem horários disponíveis e recebam confirmações de      agendamentos.
+    Permitir que os pacientes agendem consultas, visualizem horários disponíveis e recebam confirmações de agendamentos.
     <hr>
 
     - **Atendimentos:**
-    Registro de atendimentos médicos, incluindo anotações sobre diagnósticos, prescrições e orientações         dadas aos pacientes.
+    Registro de atendimentos médicos, incluindo anotações sobre diagnósticos, prescrições e orientações dadas aos pacientes.
  <br>
 
 <hr>
@@ -46,7 +46,7 @@ O Sistema de Gerenciamento de Clínica Médica "Clínica Saúde" será uma aplic
     - **Tecnologias:**
         - Frontend: Java Swing para o desenvolvimento da interface gráfica.
         - Backend: Java com integração ao banco de dados e lógica de negócio.
-        - Banco de Dados: MongoDB para armazenamento de dados não relacionais.
+        - Banco de Dados: Postgres para armazenamento de dados relacionais.
 
 <hr>
 
