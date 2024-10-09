@@ -56,8 +56,8 @@ public class LoginFuncionario extends JFrame {
         panelVazioNorth.setBackground(Color.decode("#006465"));
         panelVazioNorth.setPreferredSize(new Dimension(tamanhoJanela.width, altura30Porcento));
         JPanel panelCenter = new JPanel();
-        panelCenter.setLayout(new GridLayout(6, 3, 0,0));
-        panelCenter.setBorder(BorderFactory.createEmptyBorder(50,500,50,500));
+        panelCenter.setLayout(new GridLayout(6, 3, 0, 0));
+        panelCenter.setBorder(BorderFactory.createEmptyBorder(50, 500, 50, 500));
         panelCenter.setBackground(Color.decode("#006465"));
         JPanel panelVazioSouth = new JPanel();
         panelVazioSouth.setBackground(Color.decode("#006465"));
@@ -88,7 +88,7 @@ public class LoginFuncionario extends JFrame {
         this.add(panelCenter, BorderLayout.CENTER);
         this.add(panelVazioSouth, BorderLayout.SOUTH);
 
-// ================CRIANDO MENUBAR=================
+        // ================CRIANDO MENUBAR=================
         JMenuBar menuBar = new JMenuBar();
         menuBar.setBackground(Color.decode("#06373d"));
         JMenu menu = new JMenu("| Opções |");
@@ -99,8 +99,10 @@ public class LoginFuncionario extends JFrame {
         voltarItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                OptionFrame optionFrame = new OptionFrame(admController, funcionarioController, medicoController,pacienteController);
+                OptionFrame optionFrame = new OptionFrame(admController, funcionarioController, medicoController,
+                        pacienteController);
                 optionFrame.setVisible(true);
+                fecharJanela();
             }
         });
 
@@ -109,20 +111,24 @@ public class LoginFuncionario extends JFrame {
         menu.add(contatosItem);
         setJMenuBar(menuBar);
 
-
         loginButton.addActionListener(e -> {
             String nome = nameField.getText();
             String senha = new String(senhaField.getPassword());
 
             // Validação de login
-            if (funcController.validacao(nome, senha)) {
-                // Login bem-sucedido
-                JOptionPane.showMessageDialog(this, "Login bem-sucedido!");
-                abrirClinicaFrame(); // Chamar o método para abrir a próxima janela
-            } else {
-                // Falha no login
-                JOptionPane.showMessageDialog(this, "Nome ou senha incorretos. Tente novamente.", "Erro de Login",
+            if (nome.isEmpty() || senha.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha todos os campos.", "Erro de Login",
                         JOptionPane.ERROR_MESSAGE);
+            } else {
+                if (funcController.validacao(nome, senha)) {
+                    // Login bem-sucedido
+                    JOptionPane.showMessageDialog(this, "Login bem-sucedido!");
+                    abrirClinicaFrame(); // Chamar o método para abrir a próxima janela
+                } else {
+                    // Falha no login
+                    JOptionPane.showMessageDialog(this, "Nome ou senha incorretos. Tente novamente.", "Erro de Login",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
@@ -131,6 +137,10 @@ public class LoginFuncionario extends JFrame {
     private void abrirClinicaFrame() {
         ClinicaFrame clinicaFrame = new ClinicaFrame(funcController.getpPacienteController(), admController);
         clinicaFrame.setVisible(true);
+        this.dispose(); // Fecha a tela de login
+    }
+
+    private void fecharJanela() {
         this.dispose(); // Fecha a tela de login
     }
 

@@ -104,6 +104,7 @@ public class LoginMedico extends JFrame {
                 OptionFrame optionFrame = new OptionFrame(admController, funcionarioController, medicoController,
                         pacienteController);
                 optionFrame.setVisible(true);
+                fecharJanela();
                 
             }
         });
@@ -135,6 +136,10 @@ public class LoginMedico extends JFrame {
     private void abrirMedicoFrame() {
         ClinicaFrameMedico medicoFrame = new ClinicaFrameMedico(pacienteController);
         medicoFrame.setVisible(true);
+        this.dispose(); // Fecha a tela de login
+    }
+    
+    private void fecharJanela(){
         this.dispose(); // Fecha a tela de login
     }
 }

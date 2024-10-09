@@ -8,7 +8,6 @@ import com.example.controller.FuncionarioController;
 import com.example.controller.MedicoController;
 import com.example.controller.PacienteController;
 import com.example.model.Paciente;
-import com.example.view.ClinicaFrameMedico;
 import com.example.view.OptionFrame;
 
 public class Main {
@@ -24,6 +23,7 @@ public class Main {
         // Criar o frame e torná-lo visível
         // ClinicaFrameMedico frame = new ClinicaFrameMedico(pacienteController);
         OptionFrame frame = new OptionFrame(admController, funcionarioController, medicoController, pacienteController);
+        // ClinicaFrameADM frame = new ClinicaFrameADM(funcionarioController, medicoController);
         frame.setVisible(true);
         
         // Ao final, fechar a conexão com o banco de dados

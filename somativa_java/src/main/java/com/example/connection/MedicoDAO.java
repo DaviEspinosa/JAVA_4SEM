@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.example.model.Administrador;
+import com.example.model.Funcionario;
 import com.example.model.Medico;
 
 public class MedicoDAO {
@@ -13,6 +14,24 @@ public class MedicoDAO {
 
     public MedicoDAO(Connection connection) {
         this.connection = ConnectionFactory.createConnection();
+    }
+
+     public void cadastrarMedico(Medico medico){
+        String sql = "INSERT INTO medico (nome, senha) VALUES (?, ?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            if (preparedStatement!=null){ 
+                preparedStatement.setString(1, medico.getNome());
+                preparedStatement.setString(2, medico.getSenha());
+
+                preparedStatement.executeUpdate();
+                System.out.println("Médico cadastrado no Banco com sucesso!");
+            }else{
+                System.out.println("Erro ao cadastrar Médico no Banco!!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean validarMedico(Medico medico) {

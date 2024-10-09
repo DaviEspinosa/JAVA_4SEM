@@ -15,3 +15,11 @@ public class Administrador {
     private String nome;
     private String senha;
 }
+
+// CREATE table ADMINISTRADOR (
+//     ID SERIAL PRIMARY KEY,
+//     NOME VARCHAR(255) NOT NULL,
+//     SENHA VARCHAR(255) NOT NULL
+// )
+
+// INSERT INTO ADMINISTRADOR (NOME, SENHA) VALUES ('Davi Pedrosa', 'senha123')

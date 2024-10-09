@@ -102,6 +102,7 @@ public class LoginAdm extends JFrame {
                 OptionFrame optionFrame = new OptionFrame(admController, funcionarioController, medicoController,
                         pacienteController);
                 optionFrame.setVisible(true);
+                fecharJanela();
             }
         });
 
@@ -130,8 +131,11 @@ public class LoginAdm extends JFrame {
     }
 
     private void abrirAdmFrame() {
-        LoginAdm loginAdm = new LoginAdm(admController);
-        loginAdm.setVisible(true);
+        ClinicaFrameADM admFrame = new ClinicaFrameADM(funcionarioController, medicoController, pacienteController,admController);
+        admFrame.setVisible(true);
+        this.dispose(); // Fecha a tela de login
+    }
+    private void fecharJanela(){
         this.dispose(); // Fecha a tela de login
     }
 }
